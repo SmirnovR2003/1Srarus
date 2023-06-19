@@ -1,0 +1,42 @@
+//create request
+{
+    "workName": "workName1",
+    "workId": "workId1"
+}
+//create response
+{
+    "success": true,
+	"data": {
+        "properties":"workId1"
+    }
+}
+//create error
+{
+    "success": false,
+    "error": {
+        "code": "100",
+        "message": "Переданы неверные данные"
+    }
+}
+
+//check request
+{
+    "name": "requestId"
+}
+//check response
+{
+    "success": true,
+	"data": {
+        "status":"wait"
+    }
+}
+//check error
+{
+    "success": false,
+    "error": {
+        "code": "100",
+        "message": "Реквест не существует"
+    }
+}
+
+
