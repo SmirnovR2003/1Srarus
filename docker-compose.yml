@@ -1,4 +1,6 @@
 version: '3.5'
+volumes:
+  losst-vl:
 services:
   docker-nginx:
     image: nginx
@@ -26,7 +28,7 @@ services:
       - PMA_HOST=docker-mysql
   docker-php-fpm:
     build: 
-      context: ./php-fpm
+      context: php-fpm
       dockerfile: Dockerfile
     volumes:
       - ./:/var/www/

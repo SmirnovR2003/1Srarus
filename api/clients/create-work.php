@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect("172.18.0.3:3306","root","password", "database");
+$link = mysqli_connect("test_project-docker-mysql-1","root","password", "database");
 
 //валидация
 $workName = $_POST["workName"];
@@ -18,9 +18,12 @@ if(!$workName || !$workId)
 }
 
 //запорс
-$sql = "INSERT into works (workId, workName, status) value (?, ?, 0)";
+$date = date("Y-m-d H:i:s");
+$defaultStatus = "wait";
+
+$sql = "INSERT into `works` (workId, workName, status, date) value (?, ?, ?, ?);";
 $stmt = mysqli_prepare($link, $sql);
-mysqli_stmt_bind_param($stmt, "ss", $workId, $workName);
+mysqli_stmt_bind_param($stmt, "ssss", $workId, $workName, $defaultStatus, $date);
 mysqli_stmt_execute($stmt);
 $requestId = mysqli_insert_id($link);
 

@@ -3,8 +3,10 @@ FROM php:7.4-fpm
 
 # RUN выполняет идущую за ней команду в контексте нашего образа.
 # В данном случае мы установим некоторые зависимости и модули PHP.
-# Для установки модулей используем команду docker-php-ext-install.
+# Для установки модулей используем команду docker-php-ext-install. losst
 # На каждый RUN создается новый слой в образе, поэтому рекомендуется объединять команды.
+RUN apt-get update \
+&& apt-get install -y cron
 RUN apt-get update && apt-get install -y \
         curl \
         wget \
@@ -27,10 +29,15 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Добавим свой php.ini, можем в нем определять свои значения конфига
 ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
 
-# Указываем рабочую директорию для PHP
-WORKDIR /var/www
+# Copy your cronjob file
+COPY cron/my-cron-job /etc/cron.d/crontab
+COPY cron/log /var/log
+#COPY ./ /var/www/
 
-# Запускаем контейнер
-# Из документации: The main purpose of a CMD is to provide defaults for an executing container. These defaults can include an executable, 
-# or they can omit the executable, in which case you must specify an ENTRYPOINT instruction as well.
-CMD ["php-fpm"]
+#RUN chmod 0644 /var/www/api/clients/change-work-status.php
+# owner can read and write into the crontab, group and others can read it
+RUN chmod 0644 /etc/cron.d/crontab
+# running our crontab using the binary from the package we installed
+RUN /usr/bin/crontab /etc/cron.d/crontab
+
+CMD cron && docker-php-entrypoint php-fpm
