@@ -1,1 +1,2 @@
-* * * * * /usr/local/bin/php /var/www/api/clients/change-work-status.php
+* * * * * root /usr/local/bin/php /var/www/api/clients/change-work-status.php > /var/log/cron-log
+* * * * * root my-cron-job.sh > /var/log/cron-log

@@ -2,8 +2,8 @@
 $link = mysqli_connect("test_project-docker-mysql-1","root","password", "database");
 
 //валидация
-$requestId = $_GET['requestId'];
-$requestId = $_POST['requestId'];
+$query = parse_url($_SERVER["REQUEST_URI"]);
+$requestId = substr($query['query'], strpos($query['query'], '=')+1);
 
 if(!isset($requestId))
 {

@@ -31,12 +31,12 @@ ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
 
 # Copy your cronjob file
 COPY cron/my-cron-job /etc/cron.d/crontab
-COPY cron/log /var/log
+COPY cron/my-cron-job.sh /etc/cron.d/my-cron-job.sh
 #COPY ./ /var/www/
 
 #RUN chmod 0644 /var/www/api/clients/change-work-status.php
 # owner can read and write into the crontab, group and others can read it
-RUN chmod 0644 /etc/cron.d/crontab
+RUN chmod ugo+rwx /etc/cron.d/crontab
 # running our crontab using the binary from the package we installed
 RUN /usr/bin/crontab /etc/cron.d/crontab
 
