@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect("test_project-docker-mysql-1","root","password", "database");
+$link = mysqli_connect("mysql","root","password", "database");
 
 //валидация
 $workName = $_POST["workName"];

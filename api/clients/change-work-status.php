@@ -1,5 +1,5 @@
 <?php
-$link = mysqli_connect("test_project-docker-mysql-1","root","password", "database");
+$link = mysqli_connect("mysql","root","password", "database");
 
 $sql = "UPDATE `works` SET `status` = 'success' WHERE TIMESTAMPDIFF(SECOND, `date`, NOW()) > 300;";
 $stmt = mysqli_prepare($link, $sql);

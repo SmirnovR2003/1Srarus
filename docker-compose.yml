@@ -1,15 +1,21 @@
 version: '3.5'
 volumes:
   losst-vl:
+networks:
+  my-network:
 services:
-  docker-nginx:
+  nginx:
+    container_name: nginx
     image: nginx
     ports:
       - '8094:80'
     volumes:
       - ./:/var/www/html/
       - ./nginx:/etc/nginx/conf.d
-  docker-mysql:
+    networks:
+      - my-network
+  mysql:
+    container_name: mysql
     image: mysql:8.0
     ports:
       - 3307:3306
@@ -20,15 +26,23 @@ services:
       - MYSQL_DATABASE=database
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
-  docker-phpmyadmin:
+    networks:
+      - my-network
+  phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     ports:
       - "8095:80"
     environment:
       - PMA_HOST=docker-mysql
-  docker-php-fpm:
+    networks:
+      - my-network
+  php-fpm:
+    container_name: php-fpm
     build: 
       context: php-fpm
       dockerfile: Dockerfile
     volumes:
       - ./:/var/www/
+    networks:
+      - my-network

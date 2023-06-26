@@ -1,5 +1,5 @@
 <?php 
-$link = mysqli_connect("test_project-docker-mysql-1","root","password", "database");
+$link = mysqli_connect("mysql","root","password", "database");
 
 //валидация
 $query = parse_url($_SERVER["REQUEST_URI"]);
@@ -10,7 +10,7 @@ if(!isset($requestId))
     $error = [ 
         "success" => false,
         "error" => [
-            "code" => "1001",
+            "code" => "100",
             "message" => "Переданы неверные данные"
         ]
         ];
@@ -43,7 +43,7 @@ else
     $error = [
         "success" => false,
         "error" => [
-            "code" => "1002",
+            "code" => "100",
             "message" => "Переданы неверные данные"
         ]
         ];
